@@ -19,6 +19,8 @@ This code is designed to track the seasons of LaLiga. It is developed using Pand
 
      When you click the update button, the scoresheet CSV will update itself, filling in the cell that corresponds to the match between the two teams.
 
+     ![Texto Alternativo](images/Actualizar_resultado.png)
+
 ### **Class VisualizarLigas**:
    - This screen has a button that will allow you to choose the document you want to see. It must be the scoresheet document, the one that does not end with "clasificacion". This screen will show you the scoresheet document.
 
