@@ -357,13 +357,18 @@ class VisualizarClasificacion:
         y_top = (screen_height - height) // 2
         self.master.geometry(f'+{x_left}+{y_top}')
 
+        button_x = x_left - width//4
+        width_button = width //2
+        self.nombre_archivo_label = tk.Label(self.master, text="Archivo:")
+        self.nombre_archivo_label.place(x=0, y=10, height=10)
+
         # Create and position the text widget for displaying the classification
         self.texto_clasificacion = tk.Text(self.master, height=height, width=width, wrap='none')
-        self.texto_clasificacion.place(x=10, y=10, width=width - 20, height=height - 60)
+        self.texto_clasificacion.place(x=10, y=30, width=width - 20, height=height - 60)
 
         # Create and position the 'Guardar clasificacion' button
         self.boton_historica = tk.Button(self.master, text="Guardar clasificacion", command=self.guardar_historica)
-        self.boton_historica.place(x=10, y=height - 50, width=width - 20, height=30)
+        self.boton_historica.place(x=button_x, y=height - 30, width=width_button, height=30)
 
         # Process match results to update team standings
         self.equipos = self.clasificacion['EQUIPO'].tolist()
@@ -463,6 +468,8 @@ class VisualizarClasificacion:
             self.texto_clasificacion.delete('1.0', tk.END)
             self.texto_clasificacion.insert(tk.END, self.clasificacion.to_string())
             self.texto_clasificacion.config(state=tk.DISABLED)
+
+            self.nombre_archivo_label.config(text=f"Archivo: {self.file_name}")
 
     def crear_dataframe_empates(self):
         """
@@ -913,9 +920,7 @@ class VisualizarLiga:
         This method creates and arranges elements like buttons and text display area
         for the league results.
         """
-        # Create and pack the 'Cargar CSV' button
-        boton_cargar_csv = tk.Button(self.master, text="Cargar CSV", command=self.cargar_csv)
-        boton_cargar_csv.pack()
+
 
         # Calculate and set the window size and position
         screen_width = self.master.winfo_screenwidth()
@@ -927,9 +932,21 @@ class VisualizarLiga:
         y_top = (screen_height - height) // 2
         self.master.geometry(f'+{x_left}+{y_top}')
 
+        # Create and pack the 'Cargar CSV' button
+        boton_cargar_csv = tk.Button(self.master, text="Cargar CSV", command=self.cargar_csv)
+        boton_cargar_csv.grid(row=0, column=0, padx=10)
+
         # Create and pack the text widget to display league data
+        self.nombre_archivo_label = tk.Label(self.master, text="Archivo:")
+        self.nombre_archivo_label.grid(row=1, column=0, sticky=tk.W)
+
+
+        # Text widget para mostrar los datos de la liga
         self.texto_df = tk.Text(self.master, height=height, width=width, wrap='none')
-        self.texto_df.pack(expand=True, fill='both')
+        self.texto_df.grid(row=2, column=0, columnspan=3, sticky="nsew")
+
+        self.master.grid_rowconfigure(2, weight=1)
+        self.master.grid_columnconfigure(0, weight=1)
 
     def cargar_csv(self):
         """
@@ -951,8 +968,9 @@ class VisualizarLiga:
             self.texto_df.config(state=tk.DISABLED)
 
             # Display the name of the loaded file
-            self.nombre_archivo_label = tk.Label(self.master, text=f"Archivo: {file_name}")
-            self.nombre_archivo_label.pack()
+            self.nombre_archivo_label.config(text=f"Archivo: {file_name}")
+
+
 
 
 class App:
@@ -994,7 +1012,7 @@ class App:
         This method adds various buttons to the main screen for different functionalities
         like creating leagues, updating results, and visualizing leagues and standings.
         """
-        top_padding = 100  # Padding at the top of the window
+        top_padding = 50  # Padding at the top of the window
         button_pady = 20   # Padding around buttons
 
         # Create and pack a spacer frame for top padding
@@ -1079,3 +1097,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
