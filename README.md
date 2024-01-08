@@ -37,3 +37,18 @@ This code is designed to track the seasons of LaLiga. It is developed using Pand
 
 
      ![Texto Alternativo](images/Visualizar_historica.png)
+
+
+### Upcoming Enhancements
+
+In our forthcoming updates, we are committed to enhancing the efficiency and user experience of our league table calculation system. This initiative is driven by our dedication to addressing the current challenges with processing speed. Key improvements include:
+
+1. **Optimization of League Table Calculations**: We are exploring advanced algorithms and data handling techniques to significantly speed up the computation of league standings. This enhancement aims to provide a more seamless and responsive user experience.
+
+2. **Single-File Selection Mechanism**: To streamline the user interaction, we are implementing a feature that will require file selection only once during the session. This modification is designed to reduce redundant actions and increase user efficiency.
+
+3. **Enhancement of League Standings Archiving**: Building upon our existing feature that allows the graphical representation of league standings, we are transitioning from a manual, button-activated process to a fully automated system. This upgrade will automatically archive league standings into a dedicated file after each update, seamlessly integrating this process into the user workflow. The result is a more efficient and user-friendly experience, providing continuous access to a visual evolution of the league standings throughout the season, without the need for manual intervention.
+
+4. **Detailed Game Week Analysis**: A new feature will enable users to examine each game week individually, providing insights into the specific results and their impact on the overall league standings. This granular view will cater to users seeking in-depth analysis of the league progression.
+
+These updates underscore our commitment to delivering a robust and user-friendly experience, ensuring our platform remains at the forefront of league management solutions.
