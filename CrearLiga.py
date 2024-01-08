@@ -86,4 +86,5 @@ class CrearLiga:
         else:
             messagebox.showwarning("Advertencia", "Por favor, introduce un nombre para el archivo de la liga.")
 
+        self.master.master.deiconify()
         self.master.destroy()  # Close the window after creating the league

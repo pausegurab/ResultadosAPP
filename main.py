@@ -61,7 +61,7 @@ class App:
                                      bg='white', width=50)
         boton_actualizar.pack(pady=20)
 
-        boton_visualizar = tk.Button(self.master, text="Visualizar Liga", command=self.open_visualizar_liga, bg='white',
+        boton_visualizar = tk.Button(self.master, text="Visualizar Resultados", command=self.open_visualizar_liga, bg='white',
                                      width=50)
         boton_visualizar.pack(pady=20)
 
