@@ -34,6 +34,7 @@ class App:
         width = int(screen_width / 2)
         height = int(screen_height / 2)
 
+
         # Set the geometry of the window (size and position)
         self.master.geometry(f'{width}x{height+50}')
         self.master.geometry(f'+{screen_width // 4}+{screen_height // 4}')

@@ -23,6 +23,14 @@ class CrearLiga:
         self.master.title("Crear Liga")  # Set the window title
         self.master.protocol("WM_DELETE_WINDOW", self.on_close)  # Define the close protocol
 
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+        self.width = int(screen_width // 4)
+        height = int(screen_height // 2)
+
+
+        self.master.geometry(f'{self.width}x{height}')
+
         self.viewCrearLiga()  # Set up the interface for creating a league
 
     def on_close(self):
@@ -38,24 +46,66 @@ class CrearLiga:
         """
         Set up the interface elements for creating a league.
 
-        This method creates and arranges elements like labels, entry fields, and buttons
+        This method creates and arranges elements like labels, entry fields, lists, and buttons
         for the league creation process.
         """
-        label_instruccion = tk.Label(self.master,
-                                     text="Introduce los nombres de los equipos separados por comas:")
-        label_instruccion.pack(padx=10, pady=10)
 
-        self.entrada_equipos = tk.Entry(self.master, width=50)  # Entry for team names
-        self.entrada_equipos.pack(padx=10, pady=10)
+        self.label_lista = tk.Label(self.master, text="Equipos:")
+        self.label_lista.place(x= 10, y = 10)
+
+        self.lista = tk.Listbox(self.master)
+        self.lista.place(x=10, y=30)
+
+        self.label_add = tk.Label(self.master, text="Añade un equipo:")
+        self.label_add.place(x= 200, y=60)
+
+        self.entrada_equipos = tk.Entry(self.master, width=20)  # Entry for team names
+        self.entrada_equipos.place(x=190, y=90)
+
+        self.boton_add = tk.Button(self.master, text="Añadir", command=self.add_to_list)
+        self.boton_add.place(x=200, y=120, width=100)
+
+        label_instruccion = tk.Label(self.master,
+                                     text="Selecciona un equipo en la lista y pulsa el boton para eliminar:")
+        label_instruccion.place(x=10, y=200)
+
+
+        self.boton_add = tk.Button(self.master, text="Eliminar", command=self.delete_from_list)
+        self.boton_add.place(x=self.width//2 - 50, y=230, width=100)
 
         label_nombre = tk.Label(self.master, text="Indica el nombre del dataframe")
-        label_nombre.pack(padx=10, pady=10)
+        label_nombre.place(x=10, y=280)
 
         self.entrada_nombre = tk.Entry(self.master, width=50)  # Entry for the file name
-        self.entrada_nombre.pack(padx=10, pady=10)
+        self.entrada_nombre.place(x=10, y=310)
 
         boton_confirmar = tk.Button(self.master, text="Crear Liga", command=self.crear_liga)
-        boton_confirmar.pack(padx=10, pady=10)
+        boton_confirmar.place(x=self.width//2 - 50, y=340, width=100)
+
+    def add_to_list(self):
+        """
+        Set up the teams for creating a league.
+
+        This method adds to the list team the team written in the corresponding entry.
+        """
+
+        equipo = self.entrada_equipos.get()
+        if equipo != '':
+            equipo = equipo.upper()
+
+            self.lista.insert(tk.END, equipo)
+        self.entrada_equipos.delete(0,tk.END)
+
+    def delete_from_list(self):
+        """
+        Set up the teams for creating a league.
+
+        This method deletes the selected item from the list.
+        """
+        seleccion = self.lista.curselection()
+        if seleccion:
+            index = seleccion[0]
+            self.lista.delete(index)
 
     def crear_liga(self):
         """
@@ -64,16 +114,16 @@ class CrearLiga:
         This method reads the input team names and file name, creates the necessary
         data structures for the league, and saves them to CSV files.
         """
-        equipos_str = self.entrada_equipos.get()
-        equipos_lista = [e.strip() for e in equipos_str.split(',')]  # Process the input team names
-        equipos_lista.sort()
-        equipos_lista = [equipo.upper() for equipo in equipos_lista]  # Convert team names to uppercase
+        equipos_str = self.lista.get(0,tk.END)
+        equipos = list(equipos_str)
+        equipos.sort()   # Process the input team names
+        print(equipos)
 
-        voltes = (len(equipos_lista) - 1) * 2  # Calculate the number of game-weeks
+        voltes = (len(equipos) - 1) * 2  # Calculate the number of game-weeks
         jornadas = range(1, voltes + 1)
-        multi_index = pd.MultiIndex.from_product([equipos_lista, jornadas], names=['Equipo', 'Jornada'])
+        multi_index = pd.MultiIndex.from_product([equipos, jornadas], names=['Equipo', 'Jornada'])
 
-        self.df_liga = pd.DataFrame(index=equipos_lista, columns=equipos_lista)  # Create the league DataFrame
+        self.df_liga = pd.DataFrame(index=equipos, columns=equipos)  # Create the league DataFrame
         self.historica = pd.DataFrame(index=multi_index, columns=['Posicion'])  # Create the standings DataFrame
 
         file_name = self.entrada_nombre.get().strip()
