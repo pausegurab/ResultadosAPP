@@ -3,6 +3,7 @@ from tkinter import filedialog
 
 import pandas as pd
 import itertools
+from FileChoose import FileChoose
 
 class VisualizarClasificacion:
     """
@@ -54,11 +55,16 @@ class VisualizarClasificacion:
         It initializes a DataFrame to store teams' standings based on various statistics like points, goals for, goals against, etc.
         """
         # Open a file dialog to select a CSV file containing match results
-        self.file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        filechoose = FileChoose()
+        self.file_path = filechoose.get_filepath()
+        if self.file_path is None or self.file_path == '':
+            self.file_path = filechoose.choose_new_file()
         if self.file_path:
-            # Extract the file name from the path and load the CSV file into a DataFrame
-            self.file_name = self.file_path.split('/')[-1].replace('.csv', '')
-            self.df = pd.read_csv(self.file_path, index_col=0)
+            if "clasificacion" in self.file_path:
+                self.file_path = self.file_path.replace('clasificacion.csv', '.csv')
+            self.file_name = self.file_path.split('/')[-1].replace('.csv', '')  # Extract the file name
+
+        self.df = pd.read_csv(self.file_path, index_col=0)
 
         # Determine the number of teams (rows) from the loaded DataFrame
         self.rows = self.df.shape[0]

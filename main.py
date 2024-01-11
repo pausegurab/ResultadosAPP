@@ -41,6 +41,7 @@ class App:
         self.setup_main_screen()  # Setup the main screen with buttons
         self.filepath = None
         self.filename = None
+
     def setup_main_screen(self):
         """
         Set up the main screen of the application.
@@ -86,7 +87,6 @@ class App:
         self.nombre_archivo_label.pack(side=tk.LEFT, pady=button_pady)
 
 
-
     def open_cambiar_archivo(self):
         """
         Open the 'Cambiar Archivo' file chooser.
@@ -129,7 +129,8 @@ class App:
         """
         crearLiga = CrearLiga
         self.master.iconify()  # Minimize the main window
-        crearLiga.CrearLiga(self.master)# Initialize and open the 'Crear Liga' window
+        crearLiga.CrearLiga(self.master)  # Initialize and open the 'Crear Liga' window
+
 
     def open_actualizar_resultados(self):
         """
@@ -142,6 +143,7 @@ class App:
         self.master.iconify()  # Minimize the main window
         act.ActualizarResultados(self.master)  # Initialize and open the 'Actualizar Resultados' window
 
+
     def open_visualizar_liga(self):
         """
         Open the 'Visualizar Liga' window.
@@ -153,6 +155,7 @@ class App:
         self.master.iconify()  # Minimize the main window
         vl.VisualizarLiga(self.master)  # Initialize and open the 'Visualizar Liga' window
 
+
     def open_visualizar_clasificacion(self):
         """
         Open the 'Visualizar Clasificacion' window.
@@ -163,6 +166,7 @@ class App:
         vcl = VisualizarClasificacion
         self.master.iconify()  # Minimize the main window
         vcl.VisualizarClasificacion(self.master)  # Initialize and open the 'Visualizar Clasificacion' window
+
 
     def open_visualizar_clasificacion_grafico(self):
         """

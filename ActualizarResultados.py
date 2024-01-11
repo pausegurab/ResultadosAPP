@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 
-
+from FileChoose import FileChoose
 import pandas as pd
 
 
@@ -29,6 +29,7 @@ class ActualizarResultados:
 
         self.setup_widgets()  # Set up the interface widgets
 
+
     def on_close(self):
         """
         Handle the close event of the window.
@@ -46,8 +47,13 @@ class ActualizarResultados:
         for updating match results.
         """
         # Prompt the user to open a CSV file
-        self.file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        filechoose = FileChoose()
+        self.file_path = filechoose.get_filepath()
+        if self.file_path is None or self.file_path == '':
+            self.file_path = filechoose.choose_new_file()
         if self.file_path:
+            if "clasificacion" in self.file_path:
+                self.file_path = self.file_path.replace('clasificacion.csv', '.csv')
             self.file_name = self.file_path.split('/')[-1].replace('.csv', '')  # Extract the file name
             self.df = pd.read_csv(self.file_path, index_col=0)  # Load the CSV file into a pandas DataFrame
 

@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+from FileChoose import FileChoose
 
 
 
@@ -56,8 +57,15 @@ class VisualizarClasificacionGrafico:
         self.master.geometry(f'+{x_left}+{y_top}')
 
         # Open file dialog to choose the CSV file
-        self.file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        filechoose = FileChoose()
+        self.file_path = filechoose.get_filepath()
+        if self.file_path is None or self.file_path == '':
+            self.file_path = filechoose.choose_new_file()
         if self.file_path:
+            print(self.file_path)
+            if "clasificacion" not in self.file_path:
+                self.file_path = self.file_path.replace('.csv', 'clasificacion.csv')
+            print(self.file_path)
             self.file_name = self.file_path.split('/')[-1].replace('.csv', '')  # Extract the file name
             self.df_grafico = pd.read_csv(self.file_path, index_col=0)  # Load the CSV file into a pandas DataFrame
 
